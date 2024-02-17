@@ -1,0 +1,61 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /doc-system
+
+spring:
+  # mysql 配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/document_database?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true&allowMultiQueries=true
+    username: root
+    password: 786238776
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 初始化大小，最小，最大
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 'x'
+    # 是否开启空闲连接测试
+    testWhileIdle: true
+    # 是否开启获取连接时测试
+    testOnBorrow: false
+    # 是否开启归还连接时测试
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    hikari:
+      transaction-isolation: TRANSACTION_REPEATABLE_READ
+
+  servlet:
+    multipart:
+      max-file-size: 100MB # 设置最大文件大小为 100MB
+      max-request-size: 100MB # 设置最大请求体大小为 100MB
+
+
+JwtConfig:
+  secret: zhongkeleinao
+Mas:
+  address: 192.168.6.182
+  port: 5001
+logging:
+  config: classpath:logback.xml
+DockerInfo:
+  url: :2375
+
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: org.doc.entity

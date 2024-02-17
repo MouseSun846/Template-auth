@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.doc.mapper.UserMapper">
+    <select id="findUserByAccount" parameterType="string" resultType="org.doc.entity.User">
+        select * from db_user
+        <where>
+            account = #{account}
+        </where>
+    </select>
+
+    <select id="existsByAccount" parameterType="string" resultType="boolean">
+
+    </select>
+
+    <update id="modifyUser" parameterType="org.doc.entity.User">
+        update db_user set token = #{token},ip = #{ip},updated_time=#{updated_time} where account = #{account}
+    </update>
+</mapper>
